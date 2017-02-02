@@ -1,3 +1,5 @@
+//Autories Carla Flores A01331363 y David Manzanarez A01337545
+
 //Metodo 2
 function GeneradorMediosCuadrados(semilla,iteraciones) {
     this.semilla = semilla;
