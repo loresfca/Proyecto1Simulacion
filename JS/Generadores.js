@@ -52,7 +52,25 @@ function GeneradorCongruenciasLineales(semilla,a,c,m,iteraciones) {
     };
 }
 
-
+//Metodo 3
+function GeneradorMultiplicativo(semilla,a,m,iteraciones) {
+    this.semilla = semilla;
+    this.iteraciones = iteraciones;
+    this.a=a;
+    this.m=m;
+    
+    this.calcularCongruenciasLineales = function() {
+        var x=this.semilla;
+        var res=0;
+            
+        for(var i=1;i<=this.iteraciones;i++){
+            res=((this.a*x))%m;
+//            num_float=(res/this.m);    
+            console.log("R"+(i+1)+"="+res);            
+            x=res
+        }
+    };
+}
 
 
 

@@ -1,0 +1,27 @@
+//Autories Carla Flores A01331363 y David Manzanarez A01337545
+<html>
+    <head>
+        <script src="JS/Generadores.js"></script>
+    </head>
+    
+    <body>
+        Semilla<input type="number" id="sem" value="51"><br/>
+        a <input type="number" id="a" value="3"><br/>
+        m <input type="number" id="m" value="100"><br/>
+        Iteraciones<input type="number" id="it" value="5"><br/>
+        <input type="button" onclick="calcular()" value="Calcular"><br/>
+        <div id="res"></div>
+    </body>
+    
+    
+    <script>
+        function calcular(){            
+            var semilla=parseInt(document.getElementById("sem").value);
+            var a=parseInt(document.getElementById("a").value);
+            var m=parseInt(document.getElementById("m").value);
+            var iteraciones=parseInt(document.getElementById("it").value);
+            var generadorMultiplicativo= new GeneradorMultiplicativo(semilla,a,m,iteraciones);
+            generadorMultiplicativo.calcularCongruenciasLineales();
+        }    
+    </script>
+</html>
