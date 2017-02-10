@@ -100,6 +100,89 @@ function GeneradorMultiplicativo(semilla,a,m,iteraciones) {
 }
 
 
+//Metodo 1
+function GeneradorCongruenciasLinealesMixto(semilla,a,c,m,iteraciones) {
+    this.semilla = semilla;
+    this.iteraciones = iteraciones;
+    this.a=a;
+    this.c=c;
+    this.m=m;
+    
+    this.checarPrimosRelativos=function(a,b){    
+            var aux=0;
+            while(b != 0){
+                aux = a;
+                a = b;
+                b = aux%b;
+            }
+            return a;
+    }
+
+    this.encontrarFactorQueDivideAmbos=function(){
+        var aux=2;
+        while(aux<=this.m){
+            if(this.m%aux==0 && (this.a-1)%aux==0){
+                return true;
+            }
+            aux++;
+        }
+        return false;
+    }
+
+
+    this.cuartroDivideAmbos=function(){
+        var aux=4;
+        if(this.m%aux==0 && (this.a-1)%aux==0){
+            return true;
+        }
+        return false;
+    }
+    
+    this.calcularCongruenciasLineales = function() {
+        var cumpleCondicion1=this.checarPrimosRelativos(this.a,this.m)==1;
+        var cumpleCondicion2=this.encontrarFactorQueDivideAmbos();
+        var cumpleCondicion3=this.cuartroDivideAmbos();
+        
+        console.log(cumpleCondicion1+" "+cumpleCondicion2+" "+cumpleCondicion3);
+        
+        
+        //regresa banderas para conocer el tipo de falla y mostrarlo en pantalla con un highlight
+        var flags=[];        
+        if(cumpleCondicion1==false||cumpleCondicion2==false||cumpleCondicion3==false){
+            flags.push(cumpleCondicion1);
+            flags.push(cumpleCondicion2);
+            flags.push(cumpleCondicion3);
+        }
+        
+        var x=this.semilla;
+        var res=0;
+        var num_float=0.0;
+        var arr_num=[];
+        var arr_num_float=[];
+
+        for(var i=0;i<this.iteraciones;i++){
+            res=((this.a*x)+(this.c))%this.m
+            num_float=(res/this.m);          
+
+            arr_num.push(res);
+            arr_num_float.push(num_float);
+
+            x=res
+        }
+
+        var arr_aux=[];
+        arr_aux.push(arr_num);
+        arr_aux.push(arr_num_float);        
+        
+        if(flags.length>0){
+            arr_aux.push(flags);
+        }
+        
+        return arr_aux;    
+        
+    };
+}
+
 
 //            console.log("Generador: ("+this.a+"*"+x+"+"+this.c+")mod"+this.m);
 //            console.log("Operacion: "+Math.floor(((this.a*x)+(this.c))/this.m)+"+"+res+"/"+this.m);
