@@ -1,0 +1,24 @@
+<!--Autories Carla Flores A01331363 y David Manzanarez A01337545-->
+<html>
+    <head>
+        <script src="JS/Generadores.js"></script>
+    </head>
+    <body>
+        Semilla<input type="number" id="sem" value="10"><br/>
+        Iteraciones<input type="number" id="it" value="10"><br/>
+        <input type="button" onclick="calcular()" value="Calcular"><br/>
+        <div id="res"></div>
+    </body>
+    
+    <script>
+        function calcular(){            
+            var semilla=parseInt(document.getElementById("sem").value)
+            var iteraciones=parseInt(document.getElementById("it").value)        
+            var generadorMediosCuadrados = new GeneradorMediosCuadrados(semilla, iteraciones);
+            var x=generadorMediosCuadrados.calcularMediosCuadrados();
+            console.log(x[0]);
+            console.log(x[1]);
+        }
+    </script>
+    
+</html>
