@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.stream.Stream;
+import validador.*;
 
 import generadores.*;
 
@@ -89,20 +90,34 @@ public class PantallaGeneradorCongruenciaLineal extends JFrame{
 	private class next implements ActionListener{
 		public void actionPerformed(ActionEvent e){
 			res.setText("");
-			int x=Integer.parseInt(tx.getText());
-			int a=Integer.parseInt(ta.getText());
-			int c=Integer.parseInt(tc.getText());
-			int m=Integer.parseInt(tm.getText());
-			BeanMensajeConstructorGenerador bean= new BeanMensajeConstructorGenerador(x,a,c,m,false);
+			String[] vals=new String[4];
+			vals[0]=tx.getText();
+			vals[1]=ta.getText();
+			vals[2]=tc.getText();
+			vals[3]=tm.getText();
+			List<String> listaErrores=Validador.hacerValidaciones(vals);
 			
-			FactoryGeneradores fg= new FactoryGeneradores();
-			
-			Generador gcm=fg.construirGenerador(bean);		
-			List<NumeroAleatorio> lna=gcm.generador(10);		
-			
-			for(NumeroAleatorio n: lna){
-				res.append("Xi: "+n.getXi()+" || Ri: "+new DecimalFormat("#.####").format(n.getRi())+"\n");
-			}			
+			if(listaErrores.size()==0){
+				int x=Integer.parseInt(vals[0]);
+				int a=Integer.parseInt(vals[1]);
+				int c=Integer.parseInt(vals[2]);
+				int m=Integer.parseInt(vals[3]);
+				BeanMensajeConstructorGenerador bean= new BeanMensajeConstructorGenerador(x,a,c,m,false);
+				
+				FactoryGeneradores fg= new FactoryGeneradores();
+				
+				Generador gcm=fg.construirGenerador(bean);		
+				List<NumeroAleatorio> lna=gcm.generador(10);		
+				
+				for(NumeroAleatorio n: lna){
+					res.append("Xi: "+n.getXi()+" || Ri: "+new DecimalFormat("#.####").format(n.getRi())+"\n");
+				}			
+			}else{
+				for(String a: listaErrores){
+					System.out.println(a);
+				}
+			}
+						
 		}
 	}
 	private class back implements ActionListener{

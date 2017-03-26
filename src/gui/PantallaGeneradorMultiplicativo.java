@@ -1,5 +1,6 @@
 package gui;
 import javax.swing.*;
+import validador.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;

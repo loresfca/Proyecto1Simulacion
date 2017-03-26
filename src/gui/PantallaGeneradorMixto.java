@@ -1,5 +1,6 @@
 package gui;
 import javax.swing.*;
+import validador.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
@@ -89,6 +90,7 @@ public class PantallaGeneradorMixto extends JFrame{
 	}
 	private class next implements ActionListener{
 		public void actionPerformed(ActionEvent e){
+						
 			res.setText("");
 			int x=Integer.parseInt(tx.getText());
 			int a=Integer.parseInt(ta.getText());
