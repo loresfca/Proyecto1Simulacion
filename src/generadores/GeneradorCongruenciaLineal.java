@@ -26,7 +26,9 @@ public class GeneradorCongruenciaLineal extends Generador{
 		List<NumeroAleatorio> listaNums=new ArrayList<NumeroAleatorio>();
 		
 		for(int i=0;i<iteraciones-1;i++){			
-			listaNums.add(new NumeroAleatorio(x,(double)(x)/(double)(m)));
+			String op1= "("+a+"⋅"+xinicial+" + "+c+")mod"+m;
+			String op2= ((a*xinicial)+c)+"mod"+m;					
+			listaNums.add(new NumeroAleatorio(x,(double)(x)/(double)(m),op1,op2));
 			xinicial=x;
 			x=(a*xinicial+c)%m;			
 		}

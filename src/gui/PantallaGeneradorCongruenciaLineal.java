@@ -1,9 +1,13 @@
 package gui;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
+import java.text.Format;
+import java.util.Formatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 import validador.*;
 
@@ -12,10 +16,12 @@ import generadores.*;
 public class PantallaGeneradorCongruenciaLineal extends JFrame{
 	private static final int WIDTH = 550;
     private static final int HEIGHT = 500;
-    JTextField tx = new JTextField(2);
-	JTextField ta = new JTextField(2);
-	JTextField tc = new JTextField(2);
-	JTextField tm = new JTextField(2);
+    final int tamTextos=4;
+    JTextField tx = new JTextField(tamTextos);
+	JTextField ta = new JTextField(tamTextos);
+	JTextField tc = new JTextField(tamTextos);
+	JTextField tm = new JTextField(tamTextos);
+	Choice numAleatorios= new Choice();
 	JTextArea res= new JTextArea(2,10);
 	public PantallaGeneradorCongruenciaLineal(){
 		Container contentPane=getContentPane();
@@ -34,6 +40,7 @@ public class PantallaGeneradorCongruenciaLineal extends JFrame{
 		JLabel a;
 		JLabel c;
 		JLabel m;
+		JLabel num;
 		JPanel panel1;
 		JPanel panel2;
 		JPanel panel3;
@@ -67,9 +74,19 @@ public class PantallaGeneradorCongruenciaLineal extends JFrame{
 		m.setBackground(Color.white);
 		m.setFont(new Font("Arial", Font.BOLD,12));
 		panel3.add(m);
-		calc=new JButton("Generar números");
+		calc=new JButton("Generar");
 		panel3.add(tm);
 		
+		/////////////////////////
+		num=new JLabel(" #");
+		panel3.add(num);		
+		int maxNum=20;
+		for(int i=0;i<maxNum;i++){
+			numAleatorios.add((i+1)+"");
+		}
+        panel3.add(numAleatorios);
+        ///////////////////////
+				
 		encabezado=new JLabel("<html><br<<P ALIGN=center>Generador congruencial lineal </p> <p>&nbsp;</html>");
 		encabezado.setBackground(Color.white);
 		encabezado.setFont(new Font("Arial", Font.BOLD,20));
@@ -95,8 +112,7 @@ public class PantallaGeneradorCongruenciaLineal extends JFrame{
 			vals[1]=ta.getText();
 			vals[2]=tc.getText();
 			vals[3]=tm.getText();
-			List<String> listaErrores=Validador.hacerValidaciones(vals);
-			
+			List<String> listaErrores=Validador.hacerValidaciones(vals);			
 			if(listaErrores.size()==0){
 				int x=Integer.parseInt(vals[0]);
 				int a=Integer.parseInt(vals[1]);
@@ -106,16 +122,33 @@ public class PantallaGeneradorCongruenciaLineal extends JFrame{
 				
 				FactoryGeneradores fg= new FactoryGeneradores();
 				
-				Generador gcm=fg.construirGenerador(bean);		
-				List<NumeroAleatorio> lna=gcm.generador(10);		
+				Generador gcm=fg.construirGenerador(bean);
 				
+				
+				
+				int num=Integer.parseInt(numAleatorios.getSelectedItem())+1;
+				List<NumeroAleatorio> lna=gcm.generador(num);		
+				
+				/////				
+				int i=0;
 				for(NumeroAleatorio n: lna){
-					res.append("Xi: "+n.getXi()+" || Ri: "+new DecimalFormat("#.####").format(n.getRi())+"\n");
-				}			
+					String ri=new DecimalFormat("#.####").format(n.getRi());
+					String valores=String.format("| %15s | %15s | %15s | %15s |\n",n.getOperacion1(),n.getOperacion2(), "X"+i+":"+n.getXi(), "R"+i+":"+ri);
+					res.append(valores);
+					i++;
+				}		
+				//////
+				
 			}else{
+				String errores="Por favor corrija los siguientes errores: \n";
+				int i=1;
 				for(String a: listaErrores){
-					System.out.println(a);
+					errores+=a+"\n";
 				}
+				JOptionPane.showMessageDialog(null,
+					    errores,
+					    "ERRORES",
+					    JOptionPane.WARNING_MESSAGE);
 			}
 						
 		}

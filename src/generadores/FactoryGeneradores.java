@@ -8,7 +8,7 @@ public class FactoryGeneradores {
 		if(bean== null){
 			return null;
 		}		
-		if(bean.getA()>0 && bean.getC()>0 && bean.getEsMixto()==false){
+		if(bean.getA()>0 && bean.getC()>=0 && bean.getEsMixto()==false){
 			System.out.println("Generador cong. lineal");
 			return new GeneradorCongruenciaLineal(bean.getXinicial(),bean.getA(),bean.getC(),bean.getM());
 
